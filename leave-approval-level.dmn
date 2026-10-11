@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_LeaveApproval" name="Leave Approval Level" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.x" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <decision id="leave-approval-level" name="Leave Approval Level">
+    <decisionTable id="DT_Approval" hitPolicy="UNIQUE">
+      <input id="In_Days" label="Leave days">
+        <inputExpression id="InExp_Days" typeRef="number"><text>days</text></inputExpression>
+      </input>
+      <output id="Out_Approver" label="Approver" name="approver" typeRef="string" />
+      <rule id="Rule_Auto">
+        <description>Up to 2 days: no approval needed</description>
+        <inputEntry id="R1_days"><text>&lt;= 2</text></inputEntry>
+        <outputEntry id="R1_out"><text>"AUTO_APPROVE"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Manager">
+        <description>3 to 5 days: manager approves</description>
+        <inputEntry id="R2_days"><text>[3..5]</text></inputEntry>
+        <outputEntry id="R2_out"><text>"MANAGER"</text></outputEntry>
+      </rule>
+      <rule id="Rule_HR">
+        <description>More than 5 days: HR approves</description>
+        <inputEntry id="R3_days"><text>&gt; 5</text></inputEntry>
+        <outputEntry id="R3_out"><text>"HR"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1">
+      <dmndi:DMNShape id="DMNShape_1" dmnElementRef="leave-approval-level"><dc:Bounds height="80" width="180" x="150" y="80" /></dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
